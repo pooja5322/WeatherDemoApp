@@ -12,5 +12,4 @@ class WeatherApp : Application() {
         //TODO here we can set the common code like show progress bar/hide progress bar/check internet connection, check GPS enabled or not
         // Due to short time of period i didn't write here but usally i write such kind of code in Application class
     }
-
 }

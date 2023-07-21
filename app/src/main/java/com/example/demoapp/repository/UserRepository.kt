@@ -20,7 +20,6 @@ class UserRepository @Inject constructor(private val userApi: UserAPI) {
         _userResponseLiveData.postValue(NetworkResult.Loading())
         val response = userApi.getWeather(latitude,longitude,API_KEY)
         handleResponse(response)
-
     }
 
     private fun handleResponse(response: Response<WeatherForecastResponse>) {

@@ -27,39 +27,3 @@ object NetworkModule {
         return UserRepository(apiService)
     }
 }
-
-
-
-
-
-
-/*
-@Module
-@InstallIn(SingletonComponent::class)
-object NetworkModule {
-    @Provides
-    fun provideBaseUrl(): String = BASE_URL
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideApiService(retrofit: Retrofit): UserAPI {
-        return retrofit.create(UserAPI::class.java)
-    }
-}*/

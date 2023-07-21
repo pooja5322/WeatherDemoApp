@@ -70,7 +70,6 @@ class HomeScreen : AppCompatActivity() {
     private fun bindObserver() {
         showProgressDialog()
         authviewModel.data.observe(this, androidx.lifecycle.Observer {
-
             when (it) {
                 is NetworkResult.Success -> {
                     //TODO set data to UI
@@ -81,7 +80,7 @@ class HomeScreen : AppCompatActivity() {
                     showAlertDialog()
                 }
                 is NetworkResult.Loading -> {
-
+                   // showProgressDialog()
                 }
             }
         })
@@ -116,6 +115,7 @@ class HomeScreen : AppCompatActivity() {
         progressDialog.setCancelable(false)
         progressDialog.show()
     }
+
 
     private fun showAlertDialog() {
         val alertDialogBuilder = AlertDialog.Builder(this)
@@ -185,19 +185,39 @@ class HomeScreen : AppCompatActivity() {
         }
 
     }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.action_search)
+        val searchView = search.actionView as SearchView
+        searchView.queryHint = "Search"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    searchForPlaces(query)
+                }
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
 
+                return false
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+/*
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.apply {
-            // Assumes current activity is the searchable activity
+            //current activity is the searchable activity
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
+            setIconifiedByDefault(false)
         }
         return true
     }
+*/
 
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -251,7 +271,7 @@ class HomeScreen : AppCompatActivity() {
                 if (grantResults.isNotEmpty() &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
-                    // permission granted
+                    getCurrentLocation()
                 } else {
                     // permission denied
                     Toast.makeText(
@@ -262,5 +282,4 @@ class HomeScreen : AppCompatActivity() {
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@ package com.example.demoapp.Activities
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
@@ -12,6 +13,7 @@ import android.provider.Settings
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.demoapp.R
 import com.example.demoapp.databinding.ActivityMainBinding
@@ -36,18 +38,32 @@ class MainActivity : AppCompatActivity() {
         //TODO get users current location
         getLocation()
     }
-
+    override fun onResume() {
+        super.onResume()
+        gotoNextScreen()
+    }
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
+        gotoNextScreen()
+    }
+
+    private fun gotoNextScreen() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
                 intent = Intent(applicationContext, HomeScreen::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
+                val alertDialogBuilder = AlertDialog.Builder(this)
+                alertDialogBuilder.setTitle("Alert !")
+                alertDialogBuilder.setMessage("Please turn on the location")
+                alertDialogBuilder.setPositiveButton("OK") { dialogInterface: DialogInterface, _: Int ->
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
+
             }
         } else {
             requestPermissions()

@@ -17,7 +17,7 @@ class AuthViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val data: LiveData<NetworkResult<WeatherForecastResponse> >
+    val data: LiveData<NetworkResult<WeatherForecastResponse>>
     get() = userRepository.userResponseLiveData
 
     fun fetchData(latitude: Double, longitude: Double, API_KEY: String) {
