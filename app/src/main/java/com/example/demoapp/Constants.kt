@@ -7,4 +7,5 @@ object Constants {
     const val  API_KEY="{WEATHER API KEY}"
     //TODO registered on https://opencagedata.com/ and get the key for places api
     const val  PLACES_API_KEY="{PLACES API KEY}"
+    
 }
